@@ -26,20 +26,21 @@ const PromptInput: React.FC<PromptInputProps> = ({ onGenerate }) => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={`${styles.inputWrapper} ${isFocused ? styles.focused : ''}`}>
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onKeyDown={handleKeyDown}
-            placeholder="e.g. A fantasy tale about a lost time traveler"
-            className={styles.input}
-            rows={3}
-          />
-          <label className={`${styles.label} ${prompt || isFocused ? styles.labelFloated : ''}`}>
-            What story would you like to create?
-          </label>
+        <div className={styles.inputSection}>
+          <h2 className={styles.title}>What story would you like to create?</h2>
+          <div className={`${styles.inputWrapper} ${isFocused ? styles.focused : ''}`}>
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onKeyDown={handleKeyDown}
+              placeholder="Describe your story idea... e.g., A fantasy tale about a lost time traveler discovering ancient magic"
+              className={styles.input}
+              rows={4}
+            />
+            <div className={styles.inputDecorator}></div>
+          </div>
         </div>
         
         <button 
@@ -47,8 +48,11 @@ const PromptInput: React.FC<PromptInputProps> = ({ onGenerate }) => {
           disabled={!prompt.trim()}
           className={styles.generateButton}
         >
-          <span>Generate Book</span>
-          <span className={styles.shortcut}>⌘ Enter</span>
+          <div className={styles.buttonContent}>
+            <span className={styles.buttonIcon}>✨</span>
+            <span>Generate Your Book</span>
+            <span className={styles.shortcut}>⌘ Enter</span>
+          </div>
         </button>
       </form>
     </div>

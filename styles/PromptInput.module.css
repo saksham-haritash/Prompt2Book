@@ -1,27 +1,46 @@
 
 .container {
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
-  animation: scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+  animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  background: var(--brand-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .inputWrapper {
   position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 2px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 2rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-lg);
+  background: var(--surface-raised);
+  border: 2px solid var(--border-primary);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .inputWrapper::before {
@@ -33,19 +52,18 @@
   bottom: 0;
   background: var(--brand-primary);
   opacity: 0;
-  transition: opacity 0.4s ease;
-  border-radius: 24px;
+  transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
 .inputWrapper.focused {
-  border-color: var(--border-accent);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-glow);
+  border-color: var(--brand-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 0 4px rgba(var(--brand-accent-rgb), 0.1);
 }
 
 .inputWrapper.focused::before {
-  opacity: 0.03;
+  opacity: 0.02;
 }
 
 .input {
@@ -54,64 +72,57 @@
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-family: inherit;
   resize: none;
-  line-height: 1.7;
-  padding-top: 1.5rem;
-  min-height: 2.5rem;
-  transition: color 0.3s ease;
-  font-weight: 500;
+  line-height: 1.6;
+  padding: 1.5rem;
+  min-height: 120px;
+  transition: all 0.3s ease;
+  font-weight: 400;
 }
 
 .input::placeholder {
   color: var(--text-tertiary);
-  transition: color 0.3s ease;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
 }
 
-.label {
+.input:focus::placeholder {
+  opacity: 0.5;
+}
+
+.inputDecorator {
   position: absolute;
-  top: 0.75rem;
-  left: 2rem;
-  color: var(--text-tertiary);
-  font-size: 0.85rem;
-  pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  z-index: 2;
-  transform-origin: left top;
-  opacity: 0;
-  transform: translateY(1rem) scale(0.85);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  height: 3px;
+  width: 100%;
+  background: var(--brand-primary);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
 }
 
-.labelFloated {
-  opacity: 1;
-  transform: translateY(0) scale(0.85);
-  color: var(--brand-accent);
+.inputWrapper.focused .inputDecorator {
+  transform: translateX(-50%) scaleX(1);
 }
 
 .generateButton {
   background: var(--brand-primary);
-  background-size: 200% 200%;
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 1.5rem 3rem;
-  font-size: 1.2rem;
-  font-weight: 700;
+  border-radius: 14px;
+  padding: 1.25rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  animation: gradientShift 4s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  align-self: center;
 }
 
 .generateButton::before {
@@ -126,8 +137,8 @@
 }
 
 .generateButton:hover:not(:disabled) {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .generateButton:hover:not(:disabled)::before {
@@ -135,90 +146,101 @@
 }
 
 .generateButton:active:not(:disabled) {
-  transform: translateY(-2px) scale(1.01);
+  transform: translateY(0) scale(1);
 }
 
 .generateButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
-}
-
-.shortcut {
-  background: var(--surface-raised);
-  color: var(--text-tertiary);
-  padding: 0.4rem 0.8rem;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: 1px solid var(--border-primary);
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .buttonContent {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   z-index: 1;
   position: relative;
 }
 
 .buttonIcon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
-.generateButton:hover .buttonIcon {
-  transform: translateX(4px);
+.generateButton:hover:not(:disabled) .buttonIcon {
+  transform: scale(1.1) rotate(10deg);
 }
 
-/* Enhanced animations */
-@keyframes buttonPulse {
+.shortcut {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
   0%, 100% {
-    box-shadow: var(--shadow-lg);
+    background-position: 0% 50%;
   }
   50% {
-    box-shadow: var(--shadow-glow);
+    background-position: 100% 50%;
   }
 }
 
-.generateButton:focus-visible {
-  animation: buttonPulse 2s ease-in-out infinite;
+/* Dark theme */
+:global(.dark) .inputWrapper {
+  background: var(--surface-raised);
+  border-color: var(--border-primary);
 }
 
-/* Enhanced responsive design */
+:global(.dark) .input {
+  color: var(--text-primary);
+}
+
+:global(.dark) .input::placeholder {
+  color: var(--text-tertiary);
+}
+
+:global(.dark) .title {
+  color: var(--text-primary);
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .container {
-    max-width: 100%;
     padding: 0 1rem;
   }
   
-  .inputWrapper {
-    padding: 1.5rem;
-    border-radius: 20px;
-  }
-  
-  .label {
-    top: 0.5rem;
-    left: 1.5rem;
-    font-size: 0.8rem;
-  }
-  
-  .labelFloated {
-    opacity: 1;
-    transform: translateY(0) scale(0.85);
+  .title {
+    font-size: 2rem;
   }
   
   .input {
-    font-size: 1.1rem;
+    padding: 1.25rem;
+    font-size: 1rem;
+    min-height: 100px;
   }
   
   .generateButton {
-    padding: 1.25rem 2.5rem;
-    font-size: 1.1rem;
-    border-radius: 16px;
+    width: 100%;
+    padding: 1.5rem 2rem;
   }
   
   .shortcut {
@@ -227,67 +249,33 @@
 }
 
 @media (max-width: 480px) {
-  .inputWrapper {
-    padding: 1.25rem;
-    border-radius: 16px;
-  }
-  
-  .label {
-    top: 0.4rem;
-    left: 1.25rem;
-    font-size: 0.75rem;
-  }
-  
-  .labelFloated {
-    opacity: 1;
-    transform: translateY(0) scale(0.85);
+  .title {
+    font-size: 1.75rem;
   }
   
   .input {
-    font-size: 1rem;
+    padding: 1rem;
+    min-height: 90px;
   }
   
   .generateButton {
-    padding: 1.25rem 2rem;
+    padding: 1.25rem 1.5rem;
     font-size: 1rem;
   }
   
-  .buttonIcon {
-    font-size: 1rem;
+  .form {
+    gap: 2rem;
   }
 }
 
-/* Dark theme specific styles */
-.dark .inputWrapper {
-  background: var(--glass-bg);
-  border-color: var(--glass-border);
-}
-
-.dark .input {
-  color: var(--text-primary);
-}
-
-.dark .input::placeholder {
-  color: var(--text-tertiary);
-}
-
-.dark .label {
-  color: var(--text-tertiary);
-}
-
-.dark .labelFloated {
-  color: var(--brand-accent);
-}
-
-.dark .shortcut {
-  background: var(--surface-raised);
-  color: var(--text-tertiary);
-  border-color: var(--border-primary);
-}
-
-/* Accessibility improvements */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .generateButton::before {
+  .container {
+    animation: none;
+  }
+  
+  .generateButton::before,
+  .inputDecorator {
     display: none;
   }
   
