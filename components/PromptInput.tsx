@@ -33,7 +33,7 @@ const PromptInput: React.FC<PromptInputProps> = ({ onGenerate }) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
-            placeholder={prompt || isFocused ? "" : "e.g. A fantasy tale about a lost time traveler"}
+            placeholder="e.g. A fantasy tale about a lost time traveler"
             className={styles.input}
             rows={3}
           />

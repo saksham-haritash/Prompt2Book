@@ -58,7 +58,7 @@
   font-family: inherit;
   resize: none;
   line-height: 1.7;
-  padding-top: 0.5rem;
+  padding-top: 1.5rem;
   min-height: 2.5rem;
   transition: color 0.3s ease;
   font-weight: 500;
@@ -71,22 +71,23 @@
 
 .label {
   position: absolute;
-  top: 2rem;
+  top: 0.75rem;
   left: 2rem;
   color: var(--text-tertiary);
-  font-size: 1.2rem;
+  font-size: 0.85rem;
   pointer-events: none;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 600;
   z-index: 2;
   transform-origin: left top;
+  opacity: 0;
+  transform: translateY(1rem) scale(0.85);
 }
 
 .labelFloated {
-  top: 0.75rem;
-  font-size: 0.85rem;
+  opacity: 1;
+  transform: translateY(0) scale(0.85);
   color: var(--brand-accent);
-  transform: translateY(-0.25rem) scale(0.85);
 }
 
 .generateButton {
@@ -200,14 +201,14 @@
   }
   
   .label {
-    top: 1.5rem;
+    top: 0.5rem;
     left: 1.5rem;
+    font-size: 0.8rem;
   }
   
   .labelFloated {
-    top: 0.5rem;
-    font-size: 0.8rem;
-    transform: translateY(-0.2rem) scale(0.85);
+    opacity: 1;
+    transform: translateY(0) scale(0.85);
   }
   
   .input {
@@ -232,15 +233,14 @@
   }
   
   .label {
-    top: 1.25rem;
+    top: 0.4rem;
     left: 1.25rem;
-    font-size: 1.1rem;
+    font-size: 0.75rem;
   }
   
   .labelFloated {
-    top: 0.4rem;
-    font-size: 0.75rem;
-    transform: translateY(-0.15rem) scale(0.85);
+    opacity: 1;
+    transform: translateY(0) scale(0.85);
   }
   
   .input {
