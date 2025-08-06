@@ -1,0 +1,110 @@
+
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chapterButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: inherit;
+}
+
+.chapterButton:hover {
+  background: #f7fafc;
+  transform: translateX(4px);
+}
+
+.chapterButton.active {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  color: white;
+}
+
+.chapterButton.active:hover {
+  background: linear-gradient(45deg, #ff5252, #26d0ce);
+}
+
+.chapterNumber {
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.7;
+  min-width: 24px;
+}
+
+.chapterTitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+:global(.dark) .container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .title {
+  color: white;
+}
+
+:global(.dark) .chapterButton {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+:global(.dark) .chapterButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+:global(.dark) .chapterButton.active {
+  color: white;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    position: static;
+    margin-top: 1rem;
+  }
+  
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .chapterButton {
+    padding: 1rem;
+  }
+  
+  .chapterButton:hover {
+    transform: none;
+  }
+}
