@@ -1,30 +1,51 @@
 
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
+  animation: scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .inputWrapper {
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 2px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.inputWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--brand-primary);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 24px;
+  pointer-events: none;
 }
 
 .inputWrapper.focused {
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  border-color: var(--border-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.inputWrapper.focused::before {
+  opacity: 0.03;
 }
 
 .input {
@@ -32,76 +53,232 @@
   background: transparent;
   border: none;
   outline: none;
-  color: white;
-  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-size: 1.2rem;
   font-family: inherit;
   resize: none;
-  line-height: 1.6;
+  line-height: 1.7;
   padding-top: 0.5rem;
+  min-height: 2.5rem;
+  transition: color 0.3s ease;
+  font-weight: 500;
 }
 
 .input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-tertiary);
+  transition: color 0.3s ease;
 }
 
 .label {
   position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.1rem;
+  top: 2rem;
+  left: 2rem;
+  color: var(--text-tertiary);
+  font-size: 1.2rem;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  z-index: 2;
 }
 
 .labelFloated {
-  top: 0.5rem;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
+  top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--brand-accent);
+  transform: scale(0.9);
 }
 
 .generateButton {
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  background: var(--brand-primary);
+  background-size: 200% 200%;
   color: white;
   border: none;
-  border-radius: 12px;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 20px;
+  padding: 1.5rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+.generateButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
 .generateButton:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-glow);
+}
+
+.generateButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.generateButton:active:not(:disabled) {
+  transform: translateY(-2px) scale(1.01);
 }
 
 .generateButton:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 .shortcut {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 400;
+  background: var(--surface-raised);
+  color: var(--text-tertiary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border-primary);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
+.buttonContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1;
+  position: relative;
+}
+
+.buttonIcon {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.generateButton:hover .buttonIcon {
+  transform: translateX(4px);
+}
+
+/* Enhanced animations */
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: var(--shadow-lg);
+  }
+  50% {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+.generateButton:focus-visible {
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+/* Enhanced responsive design */
 @media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .inputWrapper {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .label {
+    top: 1.5rem;
+    left: 1.5rem;
+  }
+  
+  .input {
+    font-size: 1.1rem;
+  }
+  
+  .generateButton {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: 16px;
+  }
+  
   .shortcut {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputWrapper {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+  
+  .label {
+    top: 1.25rem;
+    left: 1.25rem;
+    font-size: 1.1rem;
+  }
+  
+  .input {
+    font-size: 1rem;
   }
   
   .generateButton {
     padding: 1.25rem 2rem;
     font-size: 1rem;
+  }
+  
+  .buttonIcon {
+    font-size: 1rem;
+  }
+}
+
+/* Dark theme specific styles */
+.dark .inputWrapper {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+.dark .input {
+  color: var(--text-primary);
+}
+
+.dark .input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.dark .label {
+  color: var(--text-tertiary);
+}
+
+.dark .labelFloated {
+  color: var(--brand-accent);
+}
+
+.dark .shortcut {
+  background: var(--surface-raised);
+  color: var(--text-tertiary);
+  border-color: var(--border-primary);
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .generateButton::before {
+    display: none;
+  }
+  
+  .generateButton:hover .buttonIcon {
+    transform: none;
   }
 }
