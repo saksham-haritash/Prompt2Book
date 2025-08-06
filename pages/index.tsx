@@ -1,10 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import PromptInput from '../components/PromptInput';
 import GenerationScreen from '../components/GenerationScreen';
 import BookPreview from '../components/BookPreview';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export interface Book {
   title: string;
@@ -20,6 +22,18 @@ const Home = () => {
   const [currentView, setCurrentView] = useState<'landing' | 'generating' | 'preview'>('landing');
   const [book, setBook] = useState<Book | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Initialize dark mode from localStorage
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) {
+      const isDark = JSON.parse(savedTheme);
+      setDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
 
   const handleGenerateBook = async (prompt: string) => {
     setCurrentView('generating');
@@ -56,8 +70,15 @@ const Home = () => {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+    
+    if (newDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   };
 
   return (
@@ -66,15 +87,14 @@ const Home = () => {
         <title>Prompt2Book - From Prompt to Book. Instantly.</title>
         <meta name="description" content="Transform a single creative prompt into a fully formatted, downloadable eBook in seconds" />
         <link rel="icon" href="/favicon.ico" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet" />
       </Head>
 
-      <button 
-        onClick={toggleDarkMode}
-        className={styles.darkModeToggle}
-      >
-        {darkMode ? '☀️' : '🌙'}
-      </button>
+      <Header 
+        darkMode={darkMode}
+        onToggleDarkMode={toggleDarkMode}
+        currentView={currentView}
+        onBackToLanding={currentView !== 'landing' ? () => setCurrentView('landing') : undefined}
+      />
 
       {currentView === 'landing' && (
         <main className={styles.landing}>
@@ -100,6 +120,8 @@ const Home = () => {
       {currentView === 'preview' && book && (
         <BookPreview book={book} onBackToLanding={() => setCurrentView('landing')} />
       )}
+
+      {currentView === 'landing' && <Footer />}
     </div>
   );
 };
