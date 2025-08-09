@@ -31,53 +31,96 @@ const PromptInput: React.FC<PromptInputProps> = ({ onGenerate }) => {
         <div className={styles.inputSection}>
           <h2 className={styles.title}>What story would you like to create?</h2>
           
-          <div className={styles.optionsGrid}>
-            <div className={styles.optionGroup}>
-              <label className={styles.optionLabel}>Genre</label>
+          <div className={styles.optionsContainer}>
+            <div className={styles.optionSection}>
+              <div className={styles.sectionHeader}>
+                <h3 className={styles.sectionTitle}>📚 Choose Your Genre</h3>
+                <p className={styles.sectionSubtitle}>Select the style and mood for your story</p>
+              </div>
               <div className={styles.genreGrid}>
                 {[
-                  { id: 'fantasy', name: 'Fantasy', emoji: '🧙‍♂️', desc: 'Magic & adventure' },
-                  { id: 'scifi', name: 'Sci-Fi', emoji: '🚀', desc: 'Future & technology' },
-                  { id: 'mystery', name: 'Mystery', emoji: '🔍', desc: 'Puzzles & intrigue' },
-                  { id: 'romance', name: 'Romance', emoji: '💕', desc: 'Love & relationships' },
-                  { id: 'thriller', name: 'Thriller', emoji: '⚡', desc: 'Suspense & action' },
-                  { id: 'horror', name: 'Horror', emoji: '👻', desc: 'Fear & supernatural' }
+                  { id: 'fantasy', name: 'Fantasy', emoji: '🧙‍♂️', desc: 'Magic & adventure', color: '#8B5CF6' },
+                  { id: 'scifi', name: 'Sci-Fi', emoji: '🚀', desc: 'Future & technology', color: '#06B6D4' },
+                  { id: 'mystery', name: 'Mystery', emoji: '🔍', desc: 'Puzzles & intrigue', color: '#F59E0B' },
+                  { id: 'romance', name: 'Romance', emoji: '💕', desc: 'Love & relationships', color: '#EC4899' },
+                  { id: 'thriller', name: 'Thriller', emoji: '⚡', desc: 'Suspense & action', color: '#EF4444' },
+                  { id: 'horror', name: 'Horror', emoji: '👻', desc: 'Fear & supernatural', color: '#6B7280' }
                 ].map((genre) => (
                   <button
                     key={genre.id}
                     type="button"
-                    className={`${styles.genreButton} ${selectedGenre === genre.id ? styles.selected : ''}`}
+                    className={`${styles.genreCard} ${selectedGenre === genre.id ? styles.selected : ''}`}
                     onClick={() => setSelectedGenre(genre.id)}
+                    style={{ '--genre-color': genre.color } as React.CSSProperties}
                   >
-                    <span className={styles.genreEmoji}>{genre.emoji}</span>
-                    <div className={styles.genreInfo}>
-                      <span className={styles.genreName}>{genre.name}</span>
-                      <span className={styles.genreDesc}>{genre.desc}</span>
+                    <div className={styles.genreHeader}>
+                      <span className={styles.genreEmoji}>{genre.emoji}</span>
+                      <div className={styles.genreSelector}>
+                        <div className={styles.radioButton}></div>
+                      </div>
+                    </div>
+                    <div className={styles.genreContent}>
+                      <h4 className={styles.genreName}>{genre.name}</h4>
+                      <p className={styles.genreDesc}>{genre.desc}</p>
                     </div>
                   </button>
                 ))}
               </div>
             </div>
             
-            <div className={styles.optionGroup}>
-              <label className={styles.optionLabel}>Book Length</label>
-              <div className={styles.lengthOptions}>
+            <div className={styles.optionSection}>
+              <div className={styles.sectionHeader}>
+                <h3 className={styles.sectionTitle}>📖 Book Length</h3>
+                <p className={styles.sectionSubtitle}>How long should your story be?</p>
+              </div>
+              <div className={styles.lengthGrid}>
                 {[
-                  { id: 'short', name: 'Short Story', chapters: '3-4', time: '~15 min read' },
-                  { id: 'novella', name: 'Novella', chapters: '6-8', time: '~45 min read' },
-                  { id: 'novel', name: 'Full Novel', chapters: '10-15', time: '~2 hour read' }
+                  { 
+                    id: 'short', 
+                    name: 'Short Story', 
+                    chapters: '3-4 chapters', 
+                    time: '15 min read',
+                    words: '~5,000 words',
+                    icon: '📄',
+                    color: '#10B981'
+                  },
+                  { 
+                    id: 'novella', 
+                    name: 'Novella', 
+                    chapters: '6-8 chapters', 
+                    time: '45 min read',
+                    words: '~12,000 words',
+                    icon: '📚',
+                    color: '#3B82F6'
+                  },
+                  { 
+                    id: 'novel', 
+                    name: 'Full Novel', 
+                    chapters: '10-15 chapters', 
+                    time: '2 hour read',
+                    words: '~25,000 words',
+                    icon: '📖',
+                    color: '#8B5CF6'
+                  }
                 ].map((length) => (
                   <button
                     key={length.id}
                     type="button"
-                    className={`${styles.lengthButton} ${selectedLength === length.id ? styles.selected : ''}`}
+                    className={`${styles.lengthCard} ${selectedLength === length.id ? styles.selected : ''}`}
                     onClick={() => setSelectedLength(length.id)}
+                    style={{ '--length-color': length.color } as React.CSSProperties}
                   >
-                    <div className={styles.lengthInfo}>
-                      <span className={styles.lengthName}>{length.name}</span>
-                      <span className={styles.lengthDetails}>
-                        {length.chapters} chapters • {length.time}
-                      </span>
+                    <div className={styles.lengthIcon}>{length.icon}</div>
+                    <div className={styles.lengthContent}>
+                      <h4 className={styles.lengthName}>{length.name}</h4>
+                      <div className={styles.lengthStats}>
+                        <span className={styles.lengthChapters}>{length.chapters}</span>
+                        <span className={styles.lengthWords}>{length.words}</span>
+                        <span className={styles.lengthTime}>{length.time}</span>
+                      </div>
+                    </div>
+                    <div className={styles.lengthSelector}>
+                      <div className={styles.radioButton}></div>
                     </div>
                   </button>
                 ))}
