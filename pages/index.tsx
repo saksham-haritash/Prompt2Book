@@ -43,34 +43,35 @@ const Home = () => {
     }
   }, []);
 
-  const handleGenerateBook = async (prompt: string) => {
+  const handleGenerateBook = async (prompt: string, genre: string, length: string) => {
     setCurrentView('generating');
     
     // Simulate book generation (replace with actual API call)
     await new Promise(resolve => setTimeout(resolve, 3000));
     
+    // Generate different content based on selections
+    const chapterCounts = { short: 4, novella: 7, novel: 12 };
+    const chapterCount = chapterCounts[length as keyof typeof chapterCounts];
+    
+    const genreStyles = {
+      fantasy: { title: "The Enchanted Realm", theme: "magic and mystical creatures" },
+      scifi: { title: "Quantum Horizons", theme: "advanced technology and space exploration" },
+      mystery: { title: "The Silent Witness", theme: "dark secrets and hidden clues" },
+      romance: { title: "Hearts Entwined", theme: "passionate love and emotional connections" },
+      thriller: { title: "Edge of Danger", theme: "high-stakes suspense and action" },
+      horror: { title: "Shadows of Fear", theme: "supernatural terror and dark forces" }
+    };
+    
+    const selectedGenreStyle = genreStyles[genre as keyof typeof genreStyles];
+    
     const mockBook: Book = {
-      title: "The Lost Time Traveler",
-      chapters: [
-        {
-          title: "Chapter 1: The Temporal Rift",
-          content: "In the depths of a forgotten laboratory, Dr. Elena Vasquez discovered something that would change everything. The machine hummed with an otherworldly energy, its crystalline core pulsing with colors that shouldn't exist. As she approached the device, reality itself seemed to waver around her, like heat waves rising from summer pavement. The air crackled with potential, and Elena felt the weight of infinite possibilities pressing against her consciousness. This was it—the breakthrough she had spent decades pursuing. But as her fingers hovered over the activation sequence, she couldn't shake the feeling that some doors, once opened, could never be closed again."
-        },
-        {
-          title: "Chapter 2: Displaced in Time",
-          content: "The world that greeted Elena was not her own. The sky burned orange, painted with hues that belonged to no earthly sunset. Buildings twisted into impossible geometries, their surfaces flowing like liquid mercury yet solid to the touch. She clutched her temporal compass, its needle spinning wildly as if drunk on the chaotic energies that permeated this place. Every step forward felt like walking through thick honey, each movement requiring tremendous effort. The air itself seemed alive, whispering secrets in languages that predated human speech. Elena realized with growing horror that she wasn't just in another place—she was in another time, perhaps another reality entirely."
-        },
-        {
-          title: "Chapter 3: The Paradox Unfolds",
-          content: "Every step forward seemed to pull her deeper into the temporal maze. The echoes of her past decisions rippled through reality, creating new timelines with each breath. Elena watched in fascination and terror as alternate versions of herself flickered in and out of existence around her. Some were older, bearing scars from battles she had never fought. Others were younger, their eyes bright with hope she had long since lost. The paradox was consuming everything, unraveling the very fabric of causality. She began to understand that her presence here wasn't an accident—it was a necessity, a correction the universe was making to prevent something far worse."
-        },
-        {
-          title: "Chapter 4: Finding the Way Home",
-          content: "With determination forged in the crucible of impossible circumstances, Elena began to understand the true nature of time itself. It wasn't a river flowing in one direction, as she had always believed, but an ocean—vast, deep, and full of currents that could carry the unwary to strange shores. The key to returning home lay not in fighting the temporal storm, but in learning to navigate it. She closed her eyes and reached out with senses she didn't know she possessed, feeling for the thread of her own timeline among the countless strands of possibility. When she finally grasped it, the connection burned like fire, but she held on, knowing that this singular moment would determine not just her fate, but the fate of all realities."
-        }
-      ],
-      wordCount: 15420,
-      generationTime: 3.2
+      title: selectedGenreStyle.title,
+      chapters: Array.from({ length: chapterCount }, (_, i) => ({
+        title: `Chapter ${i + 1}: ${['The Beginning', 'Rising Action', 'Complications', 'Climax', 'Resolution', 'New Mysteries', 'Deeper Secrets', 'The Revelation', 'Final Confrontation', 'Aftermath', 'New Dawn', 'Legacy'][i] || `Part ${i + 1}`}`,
+        content: `This chapter explores ${selectedGenreStyle.theme} as the story unfolds. ${prompt} The narrative weaves through compelling scenes that capture the essence of ${genre} storytelling, building tension and character development that keeps readers engaged. Each paragraph flows naturally into the next, creating an immersive reading experience that brings the world to life. The characters face challenges that test their resolve, while the plot moves forward with purpose and meaning. Rich descriptions paint vivid scenes, while dialogue reveals personality and advances the story. This ${length} format allows for the perfect balance of depth and pacing, ensuring that every word serves the greater narrative purpose.`
+      })),
+      wordCount: chapterCount * 1200 + Math.floor(Math.random() * 500),
+      generationTime: 2.8 + Math.random() * 1.5
     };
     
     setBook(mockBook);
